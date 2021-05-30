@@ -1,0 +1,51 @@
+module ssriscv_data_mem(
+    input clk,
+    input [31:0] mem_addr,
+    input [31:0] mem_write_data,
+    input [2:0]  func,
+    input mem_write,
+    input mem_read,
+    output reg [31:0] mem_read_data
+);
+    integer ii;
+    // initial begin
+    //     for(ii = 0; ii<256; ii = ii+1)
+    //         DM[ii] <= 0;
+    // end
+
+    reg[7:0] DM[0:255];
+
+    always @(negedge clk) begin
+        if(mem_write) begin
+            case(func)
+                3'b000: DM[mem_addr[7:0]] <= mem_write_data[7:0];
+                3'b001: begin 
+                    // $display("sh, addr: %h", mem_addr[7:0]);
+                    DM[{mem_addr[7:1], 1'b1}] <= mem_write_data[15:8];
+                    DM[{mem_addr[7:1], 1'b0}]   <= mem_write_data[7:0]; 
+                end
+                3'b010: begin
+                    // $display("sw, addr: %h", mem_addr[7:0]);
+                    DM[{mem_addr[7:2], 2'b11}] <= mem_write_data[31:24];
+                    DM[{mem_addr[7:2], 2'b10}] <= mem_write_data[23:16];
+                    DM[{mem_addr[7:2], 2'b01}] <= mem_write_data[15:8];
+                    DM[{mem_addr[7:2], 2'b00}] <= mem_write_data[7:0]; 
+                end
+            endcase 
+        end
+        if(mem_read) begin
+            case(func)
+                3'b000: mem_read_data <= {{24{ DM[mem_addr[7:0]][7] }}, DM[mem_addr[7:0]]};
+                3'b001: mem_read_data <= {{16{ DM[{mem_addr[7:1], 1'b1}][7] }}, 
+                                               DM[{mem_addr[7:1], 1'b1}], DM[{mem_addr[7:1], 1'b0}]};
+                3'b100: mem_read_data <= {24'b0, DM[mem_addr[7:0]]};
+                3'b101: mem_read_data <= {16'b0, DM[{mem_addr[7:1], 1'b1}], DM[{mem_addr[7:1], 1'b0}]};
+                3'b010: mem_read_data <= {DM[{mem_addr[7:2], 2'b11}], DM[{mem_addr[7:2], 2'b10}], 
+                                          DM[{mem_addr[7:2], 2'b01}], DM[{mem_addr[7:2], 2'b00}]};
+            endcase
+        end
+        else 
+            mem_read_data <= 32'bx;
+    end
+
+endmodule

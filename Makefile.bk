@@ -1,0 +1,15 @@
+SOURCE_NOEXT = ./tb/tb_top3
+SOURCE = ${SOURCE_NOEXT}.v
+TARGET = ${SOURCE_NOEXT}.o
+
+all:
+	iverilog ${SOURCE} -o ${TARGET}
+	# vvp ${TARGET}
+	vvp ${TARGET}
+	typora ${SOURCE_NOEXT}.md
+
+show:
+	gtkwave tb_top.vcd
+
+clean:
+	rm -f ${SOURCE_NOEXT}.md ${SOURCE_NOEXT}.vcd ${TARGET}

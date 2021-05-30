@@ -1,0 +1,62 @@
+/* FoldRegion */
+.memento_fold{
+    margin: 10px;
+    border-width: 3px;
+    border-style: double;
+    box-shadow: 0 0 20px rgb(86, 86, 86);
+}
+.memento_tool_top{
+    padding-top: 4px;
+    font-family: Courier New!important;
+    color: #0080FF;
+    font-size: 10pt;
+    border-bottom: gray solid 1px;
+    height: 25px;
+}
+.memento_tool_bottom {
+    font-family: Courier New!important;
+    color: #0080FF;
+    font-size: 10pt;
+    border-top: gray solid 1px;
+    height: 25px;
+}
+.memento_tool_top a:link, .memento_tool_top a:visited, .memento_tool_top a:active, 
+.memento_tool_bottom a:link, .memento_tool_bottom a:visited, .memento_tool_bottom a:active{
+    color: #0080FF;
+    text-decoration: none;
+}
+.memento_tool_top span, .memento_tool_bottom span{
+    cursor: pointer;
+    line-height: 25px;
+}
+.memento_box {
+    margin: 5px;
+    padding: 5px;
+    background-color: #f5f5f5;
+    display: none;
+    overflow: auto;
+    white-space: nowrap;
+    padding-bottom: 0px;
+}
+.memento_title {
+    color: black; 
+    font-weight: bold;
+    font-size: 12pt;
+    line-height: 25px;
+}
+
+/* syntaxhighlighter */
+.syntaxhighlighter code{
+    white-space: nowrap!important;
+    line-height: 1.5em!important;
+    display: inline-block;
+    background: none!important;
+    border: 0!important;
+}
+.syntaxhighlighter .line{
+    white-space: pre!important;
+    line-height: 1.5em!important;
+}
+.syntaxhighlighter textarea{
+    line-height: 1.5em!important;
+}
